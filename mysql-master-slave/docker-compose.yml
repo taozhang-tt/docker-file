@@ -1,0 +1,24 @@
+version: '3'
+services:
+  mysql-master:
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+    ports:
+      - "3306:3306"
+    build:
+      context: .
+      dockerfile: ./master/DockerFile
+    networks:
+      - mynetwork
+  mysql-slave:
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+    ports:
+      - "3406:3306"
+    build:
+      context: .
+      dockerfile: ./slave/DockerFile
+    networks:
+      - mynetwork
+networks:
+  mynetwork:
