@@ -1,24 +1,29 @@
 version: '3'
 services:
   mysql-master:
-    environment:
-      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+    # 端口映射
     ports:
       - "3306:3306"
     build:
-      context: .
-      dockerfile: ./master/DockerFile
+      # 指定上下文路径
+      context: ./master
+      # 指定Dockerfile，默认为Dockerfile
+      # dockerfile: Dockerfile
+    # 设置网络，一个容器可以同时属于多个网络
     networks:
       - mynetwork
   mysql-slave:
-    environment:
-      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
     ports:
       - "3406:3306"
     build:
-      context: .
-      dockerfile: ./slave/DockerFile
+      context: ./slave
+      # dockerfile: Dockerfile
     networks:
       - mynetwork
+
+# 配置容器的网络，控制容器之间的连接
 networks:
+  # 定义网络名，同属一个网络的容器可以通过容器名连接彼此
   mynetwork:
+    # 指定网络类型，默认为bridge
+    driver: bridge

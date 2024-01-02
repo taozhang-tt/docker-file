@@ -1,5 +1,8 @@
-FROM mysql:5.7
+FROM mysql:8.0
 
 WORKDIR /
 
-COPY master/my.cnf /etc/my.cnf
+COPY my.cnf /etc/my.cnf
+
+# 允许无密码登录
+ENV MYSQL_ALLOW_EMPTY_PASSWORD=yes
